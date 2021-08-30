@@ -21,7 +21,11 @@
                     <tbody>
                         <tr>
                             @forelse($proyectos as $proyecto)
-                            <td><a href="{{route("proyectos.show", $proyecto->id)}}" title="Detalles de proyecto">{{$proyecto->nombre}}</a></td>
+                                @if($proyecto->estatus_id > 1)
+                                <td>{{$proyecto->nombre}}</td>
+                                @else
+                                <td><a href="{{route("proyectos.show", $proyecto->id)}}" title="Detalles de proyecto">{{$proyecto->nombre}}</a></td>
+                                @endif
                             <td>
                                 @money($proyecto->presupuesto)
                             </td>

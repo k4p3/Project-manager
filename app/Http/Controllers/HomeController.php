@@ -59,7 +59,7 @@ class HomeController extends Controller
         }elseif (in_array("Normal", (array)$roles)) {
             $proyectos = Proyectos::join('areas', 'proyectos.area_id', '=', 'areas.id')
             ->join('estatus', 'proyectos.estatus_id', '=', 'estatus.id')
-            ->select('proyectos.*', 'areas.nombre as area', 'estatus.nombre as estatus')
+            ->select('proyectos.*', 'areas.nombre as area', 'estatus.nombre as estatus', 'estatus.id as estatus_id')
             ->where('proyectos.user_id', '=', $user->id)
             ->get();
 
