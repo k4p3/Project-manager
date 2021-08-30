@@ -5,17 +5,11 @@
 <div class="row justify-content-center">
     <div class="col-md-6 mt-3">
         <div class="card">
-            <div class="card-header">Proyectos por revisar</div>
-            <div class="card-body">
-
+            <div class="card-header">
+                Mis proyectos
+                <a href="{{route("proyectos.create")}}" class="btn btn-info mb-2 float-right"><i class="fas fa-plus"></i> Nuevo</a>
             </div>
-        </div>
-    </div>
-    <div class="col-md-6 mt-3">
-        <div class="card">
-            <div class="card-header">Todos los proyectos</div>
             <div class="card-body">
-                @if(@isset($proyectos))
                 <table class="table">
                     <thead class="thead-light">
                         <tr>
@@ -26,24 +20,22 @@
                     </thead>
                     <tbody>
                         <tr>
-                            @foreach ($proyectos as $proyecto)
+                            @forelse($proyectos as $proyecto)
                             <td><a href="{{route("proyectos.show", $proyecto->id)}}" title="Detalles de proyecto">{{$proyecto->nombre}}</a></td>
                             <td>
                                 @money($proyecto->presupuesto)
                             </td>
                             <td><span class="badge badge-primary">{{$proyecto->estatus}}</span></td>
-                            @endforeach
+                            @empty
+                            <div class="alert alert-light" role="alert">
+                                No hay registros para mostrar
+                            </div>
+                            @endforelse
                         </tr>
                     </tbody>
                 </table>
-                @else
-                <div class="alert alert-light" role="alert">
-                    No hay registros para mostrar
-                </div>
-                @endif
             </div>
         </div>
     </div>
 </div>
-
 @endsection

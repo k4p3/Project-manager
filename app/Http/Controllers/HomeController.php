@@ -37,13 +37,9 @@ class HomeController extends Controller
                 ->where('proyectos.estatus_id', '=', 2)
                 ->get();
 
-
-
             return view('home.user', compact('proyectos'));
 
         }elseif (in_array("Jefe Area", (array)$roles)) {
-
-
             $proyectos_por = Proyectos::join('areas', 'proyectos.area_id', '=', 'areas.id')
                 ->join('estatus', 'proyectos.estatus_id', '=', 'estatus.id')
                 ->select('proyectos.*', 'areas.nombre as area', 'estatus.nombre as estatus')
@@ -61,8 +57,13 @@ class HomeController extends Controller
             //return $proyectos;
             return view('home.jefe', compact('proyectos_por','proyectos_apro'));
         }elseif (in_array("Normal", (array)$roles)) {
+            $proyectos = Proyectos::join('areas', 'proyectos.area_id', '=', 'areas.id')
+            ->join('estatus', 'proyectos.estatus_id', '=', 'estatus.id')
+            ->select('proyectos.*', 'areas.nombre as area', 'estatus.nombre as estatus')
+            ->where('proyectos.user_id', '=', $user->id)
+            ->get();
 
-            return "no encontrado";
+            return view('home.user', compact('proyectos'));
         }elseif (in_array("Finanzas", (array)$roles)) {
 
             $proyectos = Proyectos::join('areas', 'proyectos.area_id', '=', 'areas.id')
@@ -75,14 +76,13 @@ class HomeController extends Controller
 
         }elseif (in_array("Direccion", (array)$roles)) {
 
-        $proyectos = Proyectos::join('areas', 'proyectos.area_id', '=', 'areas.id')
-            ->join('estatus', 'proyectos.estatus_id', '=', 'estatus.id')
-            ->select('proyectos.*', 'areas.nombre as area', 'estatus.nombre as estatus')
-            ->where('proyectos.estatus_id', '=', 3)
-            ->get();
+            $proyectos = Proyectos::join('areas', 'proyectos.area_id', '=', 'areas.id')
+                ->join('estatus', 'proyectos.estatus_id', '=', 'estatus.id')
+                ->select('proyectos.*', 'areas.nombre as area', 'estatus.nombre as estatus')
+                ->where('proyectos.estatus_id', '=', 3)
+                ->get();
 
-        return view('home.direccion', compact('proyectos'));
-    }
-
+            return view('home.direccion', compact('proyectos'));
+        }
     }
 }
