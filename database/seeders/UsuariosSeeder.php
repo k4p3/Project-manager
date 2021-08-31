@@ -42,13 +42,19 @@ class UsuariosSeeder extends Seeder
             'email'     => 'alfonso@udlondres.com',
             'password'  => bcrypt('123456'),
             'areas_id'   => 1
-        ])->assignRole("Jefe Area");
+        ])->assignRole("Admin");
 
         User::create([
             'name'      => 'Usuario proyecto',
             'email'     => 'usuario@prueba.com',
             'password'  => bcrypt('123456')
         ])->assignRole("Normal");
+
+        User::create([
+            'name'      => 'Usuario Jefe Area',
+            'email'     => 'area@prueba.com',
+            'password'  => bcrypt('123456')
+        ])->assignRole("Jefe Area");
 
         User::create([
             'name'      => 'Usuario Finanzas',

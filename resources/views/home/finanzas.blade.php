@@ -19,7 +19,7 @@
                     <tbody>
                         <tr>
                             @foreach ($proyectos as $proyecto)
-                            <td><a href="{{route("proyectos.show", $proyecto->id)}}" title="Detalles de proyecto">{{$proyecto->nombre}}</a></td>
+                            <td><a href="{{route("proyectos.asigna", $proyecto->id)}}" title="Detalles de proyecto">{{$proyecto->nombre}}</a></td>
                             <td>
                                 @money($proyecto->presupuesto)
                             </td>
