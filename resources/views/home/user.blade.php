@@ -19,23 +19,23 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @forelse($proyectos as $proyecto)
                         <tr>
-                            @forelse($proyectos as $proyecto)
-                                @if($proyecto->estatus_id > 1)
-                                <td>{{$proyecto->nombre}}</td>
-                                @else
-                                <td><a href="{{route("proyectos.show", $proyecto->id)}}" title="Detalles de proyecto">{{$proyecto->nombre}}</a></td>
-                                @endif
+                            @if($proyecto->estatus_id > 1)
+                            <td>{{$proyecto->nombre}}</td>
+                            @else
+                            <td><a href="{{route("proyectos.show", $proyecto->id)}}" title="Detalles de proyecto">{{$proyecto->nombre}}</a></td>
+                            @endif
                             <td>
                                 @money($proyecto->presupuesto)
                             </td>
                             <td><span class="badge badge-primary">{{$proyecto->estatus}}</span></td>
-                            @empty
-                            <div class="alert alert-light" role="alert">
-                                No hay registros para mostrar
-                            </div>
-                            @endforelse
                         </tr>
+                        @empty
+                        <div class="alert alert-light" role="alert">
+                            No hay registros para mostrar
+                        </div>
+                        @endforelse
                     </tbody>
                 </table>
             </div>

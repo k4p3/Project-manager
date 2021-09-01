@@ -17,15 +17,15 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @foreach ($proyectos_por as $proyecto)
                         <tr>
-                            @foreach ($proyectos_por as $proyecto)
                             <td><a href="{{route("proyectos.show", $proyecto->id)}}" title="Detalles de proyecto">{{$proyecto->nombre}}</a></td>
                             <td>
                                 @money($proyecto->presupuesto)
                             </td>
                             <td></td>
-                            @endforeach
                         </tr>
+                        @endforeach
                     </tbody>
                 </table>
                 @else
@@ -50,15 +50,15 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
                             @foreach ($proyectos_apro as $proyecto)
-                            <td>{{$proyecto->nombre}}</td>
-                            <td>
-                                @money($proyecto->presupuesto)
-                            </td>
-                            <td><span class="badge badge-primary">{{$proyecto->estatus}}</span></td>
+                            <tr>
+                                <td>{{$proyecto->nombre}}</td>
+                                <td>
+                                    @money($proyecto->presupuesto)
+                                </td>
+                                <td><span class="badge badge-primary">{{$proyecto->estatus}}</span></td>
+                            </tr>
                             @endforeach
-                        </tr>
                     </tbody>
                 </table>
                 @else

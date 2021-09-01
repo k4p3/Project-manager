@@ -17,15 +17,15 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @foreach ($proyectos as $proyecto)
                         <tr>
-                            @foreach ($proyectos as $proyecto)
                             <td><a href="{{route("proyectos.asigna", $proyecto->id)}}" title="Detalles de proyecto">{{$proyecto->nombre}}</a></td>
                             <td>
                                 @money($proyecto->presupuesto)
                             </td>
                             <td>{{$proyecto->estatus}}</td>
-                            @endforeach
                         </tr>
+                        @endforeach
                     </tbody>
                 </table>
                 @else
