@@ -58,7 +58,7 @@ class ProyectosController extends Controller
                 if($request->hasfile('filenames')){
                     foreach($request->file('filenames') as $file){
                         //$name = time().rand(1,100).'.'.$file->extension();
-                        $name = time().'_'.$request->file->getClientOriginalName();
+                        $name = time().'_'.$file->getClientOriginalName();
                         $file->move(public_path('files'), $name);
                         $files[] = $name;
                     }
