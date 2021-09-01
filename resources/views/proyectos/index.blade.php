@@ -11,6 +11,7 @@ $heads = [
     'Fecha limite',
     'Presupuesto',
     'Area',
+    'Usuario',
     ['label' => 'Descripción', 'width' => 30],
     'Estatus',
     ''
@@ -61,6 +62,7 @@ $heads = [
             <td> {{date('d/m/Y', strtotime($proyecto->limite))}}</td>
             <td> {{$proyecto->presupuesto}}</td>
             <td> {{$proyecto->area}}</td>
+            <td> {{$proyecto->usuario}}</td>
             <td> {{$proyecto->descripcion}}</td>
             <td> <span class="badge badge-primary">{{$proyecto->estatus}}</span></td>
             <td><form action="{{ route('proyectos.destroy',$proyecto->id) }}" method="POST">

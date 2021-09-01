@@ -18,7 +18,8 @@ class ProyectosController extends Controller
         $proyectos = DB::table('proyectos')
             ->join('areas', 'proyectos.area_id', '=', 'areas.id')
             ->join('estatus', 'proyectos.estatus_id', '=', 'estatus.id')
-            ->select('proyectos.*', 'areas.nombre as area', 'estatus.nombre as estatus')
+            ->join('users', 'proyectos.user_id', '=', 'users.id')
+            ->select('proyectos.*', 'areas.nombre as area', 'estatus.nombre as estatus', 'users.name as usuario')
             ->get();
         return view('proyectos.index', compact('proyectos'));
         //return $proyectos;
@@ -40,24 +41,36 @@ class ProyectosController extends Controller
             'clave'  => 'required|integer',
             'descripcion' => 'required',
             'limite' => 'required',
-            'presupuesto' => 'required',
+            'presupuesto' => 'required|integer',
             'area'   => 'required|integer',
-            'file' => 'required|mimes:doc,docx,odt,pdf|max:1024',
+            //'filenames' => 'required|mimes:doc,docx,odt,pdf|max:1024',
+            'filenames' => 'required',
+            'filenames.*' => 'required'
         ]);
 
         $proyecto  = new Proyectos();
 
         if($request->file()) {
             try{
-                $name = time().'_'.$request->file->getClientOriginalName();
-                $filePath = $request->file('file')->storeAs('uploads', $name, 'public');
+                /*$name = time().'_'.$request->file->getClientOriginalName();
+                $filePath = $request->file('file')->storeAs('uploads', $name, 'public');*/
+                $files = [];
+                if($request->hasfile('filenames')){
+                    foreach($request->file('filenames') as $file){
+                        //$name = time().rand(1,100).'.'.$file->extension();
+                        $name = time().'_'.$request->file->getClientOriginalName();
+                        $file->move(public_path('files'), $name);
+                        $files[] = $name;
+                    }
+                 }
 
                 $proyecto->nombre = $request->nombre;
                 $proyecto->clave = $request->clave;
                 $proyecto->descripcion = $request->descripcion;
                 $proyecto->limite = $request->limite;
                 $proyecto->presupuesto = $request->presupuesto;
-                $proyecto->documento = '/storage/' . $filePath;
+                //$proyecto->documento = '/storage/' . $filePath;
+                $proyecto->documento = $files;
                 $proyecto->area_id = $request->area;
                 $proyecto->rubro_id = $request->rubro;
                 $proyecto->estatus_id = 1;
@@ -71,7 +84,7 @@ class ProyectosController extends Controller
 
         return redirect()->route('proyectos.index')
                 ->with('success','Proyecto creado exitosamente.')
-                ->with('file', $name);;
+                ->with('filenames', $files);;
     }
 
     public function show($id){
@@ -82,8 +95,10 @@ class ProyectosController extends Controller
             ->select('proyectos.*', 'areas.nombre as area', 'estatus.nombre as estatus')
             ->where('proyectos.id', '=', $id)
             ->first();
-        //return $proyecto;
-        return view('proyectos.show', compact('proyecto'));
+
+        $documentos = json_decode( json_encode( $proyecto->documento ), true );;
+        //return $documentos;
+        return view('proyectos.show', compact('proyecto', 'documentos'));
     }
 
     public function edit($id){

@@ -20,6 +20,21 @@ class Proyectos extends Model
         'descripcion',
         'limite',
         'presupuesto',
+        'documento',
         'area_id'
     ];
+
+    protected $casts = [
+       'documento' => 'json'
+   ];
+
+    /**
+     * Set the user's first name.
+     *
+     * @param  string  $value
+     * @return void
+     */
+    public function setDocumentoAttribute($value){
+        $this->attributes['documento'] = json_encode($value);
+    }
 }

@@ -58,8 +58,18 @@
                         <dd class="col-sm-9">{{$proyecto->descripcion}}</dd>
                     </dl>
                     <dl class="row">
-                        <dt class="col-sm-3">Documento:</dt>
-                        <dd class="col-sm-9"><a href="{{$proyecto->documento}}"><i class="fas fa-file-download"></i> Descargar</a></dd>
+                        <dt class="col-sm-3">Documentos:</dt>
+                        <dd class="col-sm-9">
+
+                            @foreach (json_decode($proyecto->documento, true) as $doc)
+                            <a href="/files/{{$doc}}"><i class="fas fa-file-download"></i> {{$doc}}</a><br>
+                            @endforeach
+
+                            {{--@foreach ($documento as $doc)
+                            <a href="{{$doc}}"><i class="fas fa-file-download"></i> Descargar</a>
+                        @endforeach--}}
+                            <!--<a href="{{$proyecto->documento}}"><i class="fas fa-file-download"></i> Descargar</a>-->
+                        </dd>
                     </dl>
                     <div class="row">
                         <div class="col-md-12">

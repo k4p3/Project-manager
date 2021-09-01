@@ -66,7 +66,7 @@
                             <select name="area" class="form-control custom-select my-1 mr-sm-2 @error('area') is-invalid @enderror" id="inlineFormCustomSelectPref" required>
                                 <option selected>Selecciona una area</option>
                                 @foreach ($areas as $area)
-                                    <option value="{{$area->id}}">{{$area->nombre}}</option>
+                                <option value="{{$area->id}}">{{$area->nombre}}</option>
                                 @endforeach
                             </select>
                             @error('area')
@@ -80,7 +80,7 @@
                             <select name="rubro" class="form-control custom-select my-1 mr-sm-2 @error('rubro') is-invalid @enderror" id="inlineFormCustomSelectPref" required>
                                 <option selected>Selecciona un rubro</option>
                                 @foreach ($rubros as $rubro)
-                                    <option value="{{$rubro->id}}">{{$rubro->nombre}}</option>
+                                <option value="{{$rubro->id}}">{{$rubro->nombre}}</option>
                                 @endforeach
                             </select>
                             @error('rubro')
@@ -90,18 +90,37 @@
                             @enderror
                         </div>
 
-                        <div class="form-group">
+                        <!--<div class="form-group">
                             <label for="exampleFormControlFile1">Selecciona el documento</label>
-                            <input type="file" class="form-control-file @error('file') is-invalid @enderror" id="exampleFormControlFile1" name="file"
-                                accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.pdf" multiple>
+                            <input type="file" class="form-control-file @error('file') is-invalid @enderror" id="exampleFormControlFile1" name="file[]"
+                            accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.pdf" multiple>
                             @error('file')
                             <div class="invalid-feedback">
                                 {{$message}}
                             </div>
                             @enderror
                             <small id="fileHelp" class="form-text text-muted">Sube un documento con un tamaño maximo de 5Mb.</small>
+                        </div>-->
+                        <div class="input-group hdtuto control-group lst increment">
+                            <input type="file" name="filenames[]" class="myfrm form-control @error('filenames') is-invalid @enderror" accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.pdf" multiple>
+                            <div class="input-group-btn">
+                                <button class="btn btn-success file-add ml-1 mr-1" type="button"><i class="fas fa-plus-circle"></i></button>
+                            </div>
+                            @error('filenames')
+                            <div class="invalid-feedback">
+                                {{$message}}
+                            </div>
+                            @enderror
                         </div>
-
+                        <div class="clone hide d-none">
+                            <div class="hdtuto control-group lst input-group" style="margin-top:10px">
+                                <input type="file" name="filenames[]" class="myfrm form-control" accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.pdf">
+                                <div class="input-group-btn">
+                                    <button class="btn btn-danger file-remove ml-1 mr-1" type="button"><i class="fas fa-minus-circle"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <small id="fileHelp" class="form-text text-muted">Sube un documento con un tamaño maximo de 5Mb.</small>
                         <button type="submit" class="btn btn-primary">Guardar</button>
                     </form>
                 </div>
@@ -110,3 +129,18 @@
     </div>
 </div>
 @endsection
+
+@section('js')
+<script type="text/javascript">
+    $(document).ready(function() {
+        $(".file-add").click(function() {
+            var lsthmtl = $(".clone").html();
+            $(".increment").after(lsthmtl);
+        });
+
+        $("body").on("click", ".file-remove", function() {
+            $(this).parents(".hdtuto").remove();
+        });
+    });
+</script>
+@stop

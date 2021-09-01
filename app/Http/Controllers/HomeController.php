@@ -33,7 +33,8 @@ class HomeController extends Controller
         if (in_array('Admin', (array)$roles)) {
             $proyectos = Proyectos::join('areas', 'proyectos.area_id', '=', 'areas.id')
                 ->join('estatus', 'proyectos.estatus_id', '=', 'estatus.id')
-                ->select('proyectos.*', 'areas.nombre as area', 'estatus.nombre as estatus')
+                ->join('users', 'proyectos.user_id', '=', 'users.id')
+                ->select('proyectos.*', 'areas.nombre as area', 'estatus.nombre as estatus', 'users.name as usuario')
                 ->get();
 
             return view('proyectos.index', compact('proyectos'));
