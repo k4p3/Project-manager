@@ -47,11 +47,12 @@ class HomeController extends Controller
                 ->where('proyectos.area_id', $user->areas_id)
                 ->get();
 
-           $proyectos_apro = Proyectos::join('areas', 'proyectos.area_id', '=', 'areas.id')
+            $proyectos_apro = Proyectos::join('areas', 'proyectos.area_id', '=', 'areas.id')
                ->join('estatus', 'proyectos.estatus_id', '=', 'estatus.id')
+               ->join('proyectos_seguimiento','proyectos_seguimiento.proyectos_id', '=', 'proyectos.id')
                ->select('proyectos.*', 'areas.nombre as area', 'estatus.nombre as estatus')
-               ->where('proyectos.estatus_id', '=', 2)
                ->where('proyectos.area_id', $user->areas_id)
+               ->where('proyectos_seguimiento.user_id', $user->id)
                ->get();
 
             //return $proyectos;
@@ -72,7 +73,14 @@ class HomeController extends Controller
                 ->where('proyectos.estatus_id', '=', 2)
                 ->get();
 
-            return view('home.finanzas', compact('proyectos'));
+            $proyectos_apro = Proyectos::join('areas', 'proyectos.area_id', '=', 'areas.id')
+            ->join('estatus', 'proyectos.estatus_id', '=', 'estatus.id')
+            ->join('proyectos_seguimiento','proyectos_seguimiento.proyectos_id', '=', 'proyectos.id')
+            ->select('proyectos.*', 'areas.nombre as area', 'estatus.nombre as estatus')
+            ->where('proyectos_seguimiento.user_id', $user->id)
+            ->get();
+
+            return view('home.finanzas', compact('proyectos', 'proyectos_apro'));
 
         }elseif (in_array("Direccion", (array)$roles)) {
 

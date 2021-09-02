@@ -44,7 +44,7 @@ class NotificationsController extends Controller{
 
         $dropdownHtml = '';
 
-        foreach ($notifications as $key => $not) {
+        /*foreach ($notifications as $key => $not) {
             $icon = "<i class='mr-2 {$not['icon']}'></i>";
 
             $time = "<span class='float-right text-muted text-sm'>
@@ -58,7 +58,7 @@ class NotificationsController extends Controller{
             if ($key < count($notifications) - 1) {
                 $dropdownHtml .= "<div class='dropdown-divider'></div>";
             }
-        }
+        }*/
 
         // Return the new notification data.
 

@@ -23,11 +23,12 @@ class RolSeeder extends Seeder{
 
         $permission = Permission::create(['name' => 'home'])->syncRoles([$role1,$role2,$role3,$role4]);
 
-        $permission = Permission::create(['name' => 'proyectos.index'])->syncRoles([$role1]);
+        $permission = Permission::create(['name' => 'proyectos.index'])->syncRoles([$role1,$role4]);
         $permission = Permission::create(['name' => 'proyectos.show'])->syncRoles([$role1]);
         $permission = Permission::create(['name' => 'proyectos.edit'])->syncRoles([$role1]);
         $permission = Permission::create(['name' => 'proyectos.create'])->syncRoles([$role1]);
         $permission = Permission::create(['name' => 'proyectos.update'])->syncRoles([$role1]);
+        $permission = Permission::create(['name' => 'proyectos.destroy'])->syncRoles([$role1]);
 
         $permission = Permission::create(['name' => 'proyectos.aprueba.jefearea'])->syncRoles([$role1, $role2]);
         $permission = Permission::create(['name' => 'proyectos.aprueba.finanza'])->syncRoles([$role1, $role3]);

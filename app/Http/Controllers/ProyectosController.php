@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Proyectos;
 use App\Models\Areas;
-use App\Models\Estatus;
+use App\Models\ProyectosSeguimiento;
 use App\Models\Rubros;
 
 use Illuminate\Http\Request;
@@ -48,7 +48,7 @@ class ProyectosController extends Controller
             'filenames.*' => 'required'
         ]);
 
-        $proyecto  = new Proyectos();
+        $proyecto    = new Proyectos();
 
         if($request->file()) {
             try{
@@ -133,9 +133,19 @@ class ProyectosController extends Controller
     }
 
     public function siguiente($id){
+
+        $user = Auth::user();
+
         $proyecto = Proyectos::find($id);
         $proyecto->estatus_id = 2;
         $proyecto->save();
+
+        $seguimiento = ProyectosSeguimiento::firstOrNew(
+            ['proyectos_id' => $id, 'user_id' => $user->id]
+        );
+        $seguimiento->save();
+
+
 
         return redirect()->route('proyectos.show', $proyecto)
         ->with('success','Proyecto enviado al departamento de finanzas');
@@ -158,28 +168,51 @@ class ProyectosController extends Controller
             'pasignado' => 'required'
         ]);
 
+        $user = Auth::user();
+
         $proyecto = Proyectos::find($id);
         $proyecto->pasignado = $request->pasignado;
         $proyecto->estatus_id = 3;
         $proyecto->save();
+
+        $seguimiento = ProyectosSeguimiento::firstOrNew(
+            ['proyectos_id' => $id, 'user_id' => $user->id]
+        );
+        $seguimiento->save();
 
         return redirect()->route('proyectos.show', $proyecto)
         ->with('success','Proyecto actualizado exitosamente.');
     }
 
     public function autoriza($id){
+
+        $user = Auth::user();
+
         $proyecto = Proyectos::find($id);
         $proyecto->estatus_id = 4;
         $proyecto->save();
+
+        $seguimiento = ProyectosSeguimiento::firstOrNew(
+            ['proyectos_id' => $id, 'user_id' => $user->id]
+        );
+        $seguimiento->save();
 
         return redirect()->route('proyectos.show', $proyecto)
         ->with('success','Proyecto aprobado exitosamente.');
     }
 
     public function rechaza($id){
+
+        $user  = Auth::user();
+
         $proyecto = Proyectos::find($id);
         $proyecto->estatus_id = 5;
         $proyecto->save();
+
+        $seguimiento = ProyectosSeguimiento::firstOrNew(
+            ['proyectos_id' => $id, 'user_id' => $user->id]
+        );
+        $seguimiento->save();
 
         return redirect()->route('proyectos.index', $proyecto)
         ->with('success','El proyecto se ha rechazado corrrectamente.');

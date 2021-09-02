@@ -70,8 +70,8 @@ $heads = [
                 @method('DELETE')
                 <nobr>
                 <a href="{{route("proyectos.show", $proyecto->id)}}" class="btn btn-xs btn-default text-teal mx-1" title="Details"><i class="fa fa-lg fa-fw fa-eye"></i></a>
-                <a href="{{route("proyectos.edit", $proyecto->id)}}" class="btn btn-xs btn-default text-primary mx-1" title="Edit"><i class="fa fa-lg fa-fw fa-pen"></i></a>
-                <button type="submit" class="btn btn-xs btn-default text-danger mx-1" title="Delete"><i class="fa fa-lg fa-fw fa-trash"></i></button>
+                @can ('proyectos.edit')<a href="{{route("proyectos.edit", $proyecto->id)}}" class="btn btn-xs btn-default text-primary mx-1" title="Edit"><i class="fa fa-lg fa-fw fa-pen"></i></a> @endcan
+                @can ('proyectos.delete')<button type="submit" class="btn btn-xs btn-default text-danger mx-1" title="Delete"><i class="fa fa-lg fa-fw fa-trash"></i></button> @endcan
                 </nobr>
                 </form>
             </td>
